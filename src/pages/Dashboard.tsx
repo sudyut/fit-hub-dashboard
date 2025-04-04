@@ -1,7 +1,5 @@
 
 import { FC } from "react";
-import Sidebar from "@/components/layout/Sidebar";
-import TopBar from "@/components/layout/TopBar";
 import MembersTable, { Member } from "@/components/members/MembersTable";
 import StatsCard from "@/components/dashboard/StatsCard";
 import { Users, CreditCard, Calendar, TrendingUp } from "lucide-react";
@@ -96,52 +94,46 @@ const Dashboard: FC = () => {
   };
 
   return (
-    <div className="flex h-screen bg-fitness-background overflow-hidden">
-      <Sidebar />
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <TopBar userName="Mike" />
-        <div className="flex-1 overflow-y-auto p-6">
-          <h1 className="text-2xl font-bold mb-6">Dashboard Overview</h1>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <StatsCard
-              title="Total Members"
-              value="120"
-              icon={<Users className="h-6 w-6 text-fitness-blue" />}
-              trend={{ value: 8, isPositive: true }}
-              description="vs last month"
-            />
-            <StatsCard
-              title="Revenue"
-              value="$8,250"
-              icon={<CreditCard className="h-6 w-6 text-fitness-green" />}
-              trend={{ value: 12, isPositive: true }}
-              description="vs last month"
-            />
-            <StatsCard
-              title="Active Subscriptions"
-              value="105"
-              icon={<Calendar className="h-6 w-6 text-fitness-purple" />}
-              trend={{ value: 3, isPositive: true }}
-              description="vs last month"
-            />
-            <StatsCard
-              title="Pending Payments"
-              value="5"
-              icon={<TrendingUp className="h-6 w-6 text-fitness-red" />}
-              trend={{ value: 2, isPositive: false }}
-              description="vs last month"
-            />
-          </div>
-          
-          <MembersTable 
-            data={members} 
-            onEdit={handleEditMember}
-            onDelete={handleDeleteMember}
-          />
-        </div>
+    <>
+      <h1 className="text-2xl font-bold mb-6">Dashboard Overview</h1>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <StatsCard
+          title="Total Members"
+          value="120"
+          icon={<Users className="h-6 w-6 text-fitness-blue" />}
+          trend={{ value: 8, isPositive: true }}
+          description="vs last month"
+        />
+        <StatsCard
+          title="Revenue"
+          value="$8,250"
+          icon={<CreditCard className="h-6 w-6 text-fitness-green" />}
+          trend={{ value: 12, isPositive: true }}
+          description="vs last month"
+        />
+        <StatsCard
+          title="Active Subscriptions"
+          value="105"
+          icon={<Calendar className="h-6 w-6 text-fitness-purple" />}
+          trend={{ value: 3, isPositive: true }}
+          description="vs last month"
+        />
+        <StatsCard
+          title="Pending Payments"
+          value="5"
+          icon={<TrendingUp className="h-6 w-6 text-fitness-red" />}
+          trend={{ value: 2, isPositive: false }}
+          description="vs last month"
+        />
       </div>
-    </div>
+      
+      <MembersTable 
+        data={members} 
+        onEdit={handleEditMember}
+        onDelete={handleDeleteMember}
+      />
+    </>
   );
 };
 
