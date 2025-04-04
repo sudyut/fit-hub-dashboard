@@ -58,7 +58,7 @@ const Sidebar: FC<SidebarProps> = ({ className }) => {
       )}
     >
       <div className="flex items-center gap-2 p-2 mb-8">
-        <div className="h-8 w-8 rounded-md bg-fitness-red flex items-center justify-center">
+        <div className="h-8 w-8 rounded-md bg-fitness-purple flex items-center justify-center">
           <svg
             viewBox="0 0 24 24"
             fill="none"
@@ -88,7 +88,7 @@ const Sidebar: FC<SidebarProps> = ({ className }) => {
             />
           </svg>
         </div>
-        <span className="text-xl font-bold text-fitness-red">FitHub</span>
+        <span className="text-xl font-bold text-fitness-purple">FitHub</span>
       </div>
 
       <nav className="flex-1 space-y-1 mt-4">
@@ -99,8 +99,8 @@ const Sidebar: FC<SidebarProps> = ({ className }) => {
             className={cn(
               "flex items-center gap-3 px-3 py-3 text-sm font-medium rounded-md transition-colors",
               isActive(item.href)
-                ? "bg-fitness-red text-white"
-                : "text-gray-600 hover:bg-gray-100"
+                ? "bg-fitness-purple text-white"
+                : "text-gray-600 hover:bg-purple-50 hover:text-fitness-purple"
             )}
           >
             <item.icon className="h-5 w-5" />
@@ -111,10 +111,10 @@ const Sidebar: FC<SidebarProps> = ({ className }) => {
 
       <div className="border-t border-gray-200 pt-4 mt-auto">
         <div className="flex items-center gap-3 px-3 py-2 text-sm text-gray-600 mb-2">
-          <Mail className="h-5 w-5" />
+          <Mail className="h-5 w-5 text-fitness-purple" />
           <span className="truncate">mike@fithub.com</span>
         </div>
-        <button className="flex w-full items-center gap-3 px-3 py-3 text-sm font-medium text-gray-600 hover:bg-gray-100 rounded-md transition-colors">
+        <button className="flex w-full items-center gap-3 px-3 py-3 text-sm font-medium text-gray-600 hover:bg-red-50 hover:text-red-500 rounded-md transition-colors">
           <LogOut className="h-5 w-5" />
           Logout
         </button>

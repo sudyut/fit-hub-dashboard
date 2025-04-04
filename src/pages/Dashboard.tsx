@@ -1,12 +1,18 @@
 
-import { FC } from "react";
+import { FC, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import MembersTable, { Member } from "@/components/members/MembersTable";
 import StatsCard from "@/components/dashboard/StatsCard";
 import { Users, CreditCard, Calendar, TrendingUp } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import RevenueChart from "@/components/dashboard/RevenueChart";
+import SubscriptionChart from "@/components/dashboard/SubscriptionChart";
+import PendingPaymentsTable from "@/components/dashboard/PendingPaymentsTable";
 
 const Dashboard: FC = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
+  const [activeSection, setActiveSection] = useState<string | null>(null);
 
   // Mock member data
   const members: Member[] = [
@@ -78,6 +84,10 @@ const Dashboard: FC = () => {
     },
   ];
 
+  const pendingMembers = members.filter(member => 
+    member.paymentStatus === 'pending' || member.paymentStatus === 'overdue'
+  );
+
   const handleEditMember = (member: Member) => {
     toast({
       title: "Edit Member",
@@ -93,6 +103,14 @@ const Dashboard: FC = () => {
     });
   };
 
+  const handleCardClick = (section: string) => {
+    if (section === 'members') {
+      navigate('/members');
+    } else {
+      setActiveSection(activeSection === section ? null : section);
+    }
+  };
+
   return (
     <>
       <h1 className="text-2xl font-bold mb-6">Dashboard Overview</h1>
@@ -101,16 +119,20 @@ const Dashboard: FC = () => {
         <StatsCard
           title="Total Members"
           value="120"
-          icon={<Users className="h-6 w-6 text-fitness-blue" />}
+          icon={<Users className="h-6 w-6 text-fitness-purple" />}
           trend={{ value: 8, isPositive: true }}
           description="vs last month"
+          onClick={() => handleCardClick('members')}
+          className="cursor-pointer hover:shadow-md transition-shadow"
         />
         <StatsCard
           title="Revenue"
           value="$8,250"
-          icon={<CreditCard className="h-6 w-6 text-fitness-green" />}
+          icon={<CreditCard className="h-6 w-6 text-fitness-purple" />}
           trend={{ value: 12, isPositive: true }}
           description="vs last month"
+          onClick={() => handleCardClick('revenue')}
+          className="cursor-pointer hover:shadow-md transition-shadow"
         />
         <StatsCard
           title="Active Subscriptions"
@@ -118,21 +140,48 @@ const Dashboard: FC = () => {
           icon={<Calendar className="h-6 w-6 text-fitness-purple" />}
           trend={{ value: 3, isPositive: true }}
           description="vs last month"
+          onClick={() => handleCardClick('subscriptions')}
+          className="cursor-pointer hover:shadow-md transition-shadow"
         />
         <StatsCard
           title="Pending Payments"
           value="5"
-          icon={<TrendingUp className="h-6 w-6 text-fitness-red" />}
+          icon={<TrendingUp className="h-6 w-6 text-fitness-purple" />}
           trend={{ value: 2, isPositive: false }}
           description="vs last month"
+          onClick={() => handleCardClick('pendingPayments')}
+          className="cursor-pointer hover:shadow-md transition-shadow"
         />
       </div>
       
-      <MembersTable 
-        data={members} 
-        onEdit={handleEditMember}
-        onDelete={handleDeleteMember}
-      />
+      {activeSection === 'revenue' && (
+        <div className="bg-white p-6 rounded-lg shadow-md mb-8">
+          <h2 className="text-xl font-semibold mb-4">Revenue Trends</h2>
+          <RevenueChart />
+        </div>
+      )}
+      
+      {activeSection === 'subscriptions' && (
+        <div className="bg-white p-6 rounded-lg shadow-md mb-8">
+          <h2 className="text-xl font-semibold mb-4">Subscription Trends</h2>
+          <SubscriptionChart />
+        </div>
+      )}
+      
+      {activeSection === 'pendingPayments' && (
+        <div className="bg-white p-6 rounded-lg shadow-md mb-8">
+          <h2 className="text-xl font-semibold mb-4">Pending Payments</h2>
+          <PendingPaymentsTable data={pendingMembers} onEdit={handleEditMember} onDelete={handleDeleteMember} />
+        </div>
+      )}
+      
+      {!activeSection && (
+        <MembersTable 
+          data={members} 
+          onEdit={handleEditMember}
+          onDelete={handleDeleteMember}
+        />
+      )}
     </>
   );
 };

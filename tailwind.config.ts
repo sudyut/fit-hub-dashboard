@@ -69,8 +69,10 @@ export default {
 					blue: '#3a86ff',
 					lightblue: '#a8dadc',
 					green: '#2a9d8f',
-					purple: '#6930c3',
-					darkpurple: '#3a0ca3',
+					purple: '#9b87f5',
+					darkpurple: '#6930c3',
+					verydarkpurple: '#3a0ca3',
+					lightpurple: '#D6BCFA',
 					background: '#f7f7f9',
 				}
 			},
