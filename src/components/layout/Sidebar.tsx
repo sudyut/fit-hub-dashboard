@@ -2,7 +2,7 @@
 import { FC } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { LayoutDashboard, Settings, HelpCircle, LogOut, Users, Calendar, BarChart3 } from "lucide-react";
+import { LayoutDashboard, Settings, HelpCircle, LogOut, Users, Calendar, BarChart3, Mail } from "lucide-react";
 
 interface SidebarProps {
   className?: string;
@@ -110,6 +110,10 @@ const Sidebar: FC<SidebarProps> = ({ className }) => {
       </nav>
 
       <div className="border-t border-gray-200 pt-4 mt-auto">
+        <div className="flex items-center gap-3 px-3 py-2 text-sm text-gray-600 mb-2">
+          <Mail className="h-5 w-5" />
+          <span className="truncate">mike@fithub.com</span>
+        </div>
         <button className="flex w-full items-center gap-3 px-3 py-3 text-sm font-medium text-gray-600 hover:bg-gray-100 rounded-md transition-colors">
           <LogOut className="h-5 w-5" />
           Logout
