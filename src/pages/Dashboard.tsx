@@ -3,11 +3,12 @@ import { FC, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MembersTable, { Member } from "@/components/members/MembersTable";
 import StatsCard from "@/components/dashboard/StatsCard";
-import { Users, CreditCard, Calendar, TrendingUp } from "lucide-react";
+import { Users, CreditCard, Calendar, TrendingUp, ChevronRight } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import RevenueChart from "@/components/dashboard/RevenueChart";
 import SubscriptionChart from "@/components/dashboard/SubscriptionChart";
 import PendingPaymentsTable from "@/components/dashboard/PendingPaymentsTable";
+import { Button } from "@/components/ui/button";
 
 const Dashboard: FC = () => {
   const { toast } = useToast();
@@ -176,12 +177,26 @@ const Dashboard: FC = () => {
       )}
       
       {!activeSection && (
-        <MembersTable 
-          data={members.slice(0, 5)} 
-          onView={handleViewMember}
-          onEdit={handleViewMember}
-          onDelete={handleDeleteMember}
-        />
+        <>
+          <div className="bg-white p-6 rounded-lg shadow-md mb-8">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold">Recent Members</h2>
+              <Button 
+                onClick={() => navigate('/members')}
+                variant="outline" 
+                className="text-fitness-purple border-fitness-purple hover:bg-fitness-purple hover:text-white"
+              >
+                Show More <ChevronRight className="h-4 w-4 ml-1" />
+              </Button>
+            </div>
+            <MembersTable 
+              data={members.slice(0, 10)} 
+              onView={handleViewMember}
+              onEdit={handleViewMember}
+              onDelete={handleDeleteMember}
+            />
+          </div>
+        </>
       )}
     </>
   );

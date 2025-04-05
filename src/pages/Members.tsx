@@ -6,10 +6,13 @@ import MembersTable from "@/components/members/MembersTable";
 import { useToast } from "@/hooks/use-toast";
 import MemberDetails from "@/components/members/MemberDetails";
 import { Member } from "@/components/members/MembersTable";
+import { Input } from "@/components/ui/input";
+import { Search } from "lucide-react";
 
 const Members: FC = () => {
   const { toast } = useToast();
   const [selectedMember, setSelectedMember] = useState<Member | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
   
   // Mock member data
   const members: Member[] = [
@@ -117,6 +120,14 @@ const Members: FC = () => {
     },
   ];
 
+  const filteredMembers = searchQuery 
+    ? members.filter(member => 
+        member.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        member.email?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        member.uniqueId.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : members;
+
   const handleViewMember = (member: Member) => {
     setSelectedMember(member);
     toast({
@@ -140,8 +151,22 @@ const Members: FC = () => {
           ) : (
             <>
               <h1 className="text-2xl font-bold mb-6">Members</h1>
+              
+              <div className="relative mb-6">
+                <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                  <Search className="h-5 w-5 text-gray-400" />
+                </div>
+                <Input
+                  type="text"
+                  placeholder="Search by name, email or ID..."
+                  className="pl-10 pr-4 py-2 w-full md:w-1/2 lg:w-1/3"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+              </div>
+              
               <MembersTable 
-                data={members} 
+                data={filteredMembers} 
                 onView={handleViewMember}
               />
             </>
