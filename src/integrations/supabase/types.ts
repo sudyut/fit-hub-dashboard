@@ -9,7 +9,268 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      activity_performance: {
+        Row: {
+          attendance: number | null
+          created_at: string
+          goal_achievement: number | null
+          id: string
+          member_id: string
+          updated_at: string
+        }
+        Insert: {
+          attendance?: number | null
+          created_at?: string
+          goal_achievement?: number | null
+          id?: string
+          member_id: string
+          updated_at?: string
+        }
+        Update: {
+          attendance?: number | null
+          created_at?: string
+          goal_achievement?: number | null
+          id?: string
+          member_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "activity_performance_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "members"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      goals_preferences: {
+        Row: {
+          created_at: string
+          diet_preference: string | null
+          diet_remarks: string | null
+          goals: string[] | null
+          id: string
+          member_id: string
+          timeline: string | null
+          updated_at: string
+          workout_frequency: number | null
+          workout_styles: string[] | null
+        }
+        Insert: {
+          created_at?: string
+          diet_preference?: string | null
+          diet_remarks?: string | null
+          goals?: string[] | null
+          id?: string
+          member_id: string
+          timeline?: string | null
+          updated_at?: string
+          workout_frequency?: number | null
+          workout_styles?: string[] | null
+        }
+        Update: {
+          created_at?: string
+          diet_preference?: string | null
+          diet_remarks?: string | null
+          goals?: string[] | null
+          id?: string
+          member_id?: string
+          timeline?: string | null
+          updated_at?: string
+          workout_frequency?: number | null
+          workout_styles?: string[] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "goals_preferences_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "members"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      members: {
+        Row: {
+          address: string | null
+          age: number | null
+          body_fat: number | null
+          created_at: string
+          date_of_birth: string | null
+          email: string | null
+          emergency_contact: string | null
+          height: number | null
+          id: string
+          name: string
+          payment_status: string
+          phone: string | null
+          subscription_end: string
+          subscription_start: string
+          subscription_type: string
+          unique_id: string
+          updated_at: string
+          weight: number | null
+        }
+        Insert: {
+          address?: string | null
+          age?: number | null
+          body_fat?: number | null
+          created_at?: string
+          date_of_birth?: string | null
+          email?: string | null
+          emergency_contact?: string | null
+          height?: number | null
+          id?: string
+          name: string
+          payment_status: string
+          phone?: string | null
+          subscription_end: string
+          subscription_start: string
+          subscription_type: string
+          unique_id: string
+          updated_at?: string
+          weight?: number | null
+        }
+        Update: {
+          address?: string | null
+          age?: number | null
+          body_fat?: number | null
+          created_at?: string
+          date_of_birth?: string | null
+          email?: string | null
+          emergency_contact?: string | null
+          height?: number | null
+          id?: string
+          name?: string
+          payment_status?: string
+          phone?: string | null
+          subscription_end?: string
+          subscription_start?: string
+          subscription_type?: string
+          unique_id?: string
+          updated_at?: string
+          weight?: number | null
+        }
+        Relationships: []
+      }
+      physical_details: {
+        Row: {
+          arms: number | null
+          chest: number | null
+          created_at: string
+          fitness_level: string | null
+          hips: number | null
+          id: string
+          legs: number | null
+          member_id: string
+          updated_at: string
+          waist: number | null
+        }
+        Insert: {
+          arms?: number | null
+          chest?: number | null
+          created_at?: string
+          fitness_level?: string | null
+          hips?: number | null
+          id?: string
+          legs?: number | null
+          member_id: string
+          updated_at?: string
+          waist?: number | null
+        }
+        Update: {
+          arms?: number | null
+          chest?: number | null
+          created_at?: string
+          fitness_level?: string | null
+          hips?: number | null
+          id?: string
+          legs?: number | null
+          member_id?: string
+          updated_at?: string
+          waist?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "physical_details_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "members"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      progress_logs: {
+        Row: {
+          body_fat: number | null
+          created_at: string
+          date: string
+          id: string
+          member_id: string
+          weight: number | null
+        }
+        Insert: {
+          body_fat?: number | null
+          created_at?: string
+          date: string
+          id?: string
+          member_id: string
+          weight?: number | null
+        }
+        Update: {
+          body_fat?: number | null
+          created_at?: string
+          date?: string
+          id?: string
+          member_id?: string
+          weight?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "progress_logs_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "members"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workout_history: {
+        Row: {
+          created_at: string
+          date: string
+          duration: number
+          id: string
+          member_id: string
+          workout: string
+        }
+        Insert: {
+          created_at?: string
+          date: string
+          duration: number
+          id?: string
+          member_id: string
+          workout: string
+        }
+        Update: {
+          created_at?: string
+          date?: string
+          duration?: number
+          id?: string
+          member_id?: string
+          workout?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workout_history_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "members"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never

@@ -25,9 +25,20 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, Edit, Eye, MoreHorizontal, Trash2 } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 export interface Member {
-  id: number;
+  id: number | string;
   uniqueId: string;
   name: string;
   age: number;
@@ -79,21 +90,29 @@ export interface Member {
 
 interface MembersTableProps {
   data: Member[];
+  loading?: boolean;
   onView?: (member: Member) => void;
   onEdit?: (member: Member) => void;
-  onDelete?: (id: number) => void;
+  onDelete?: (id: number | string) => void;
 }
 
 const MembersTable: FC<MembersTableProps> = ({ 
   data, 
+  loading = false,
   onView = () => {},
   onEdit = () => {}, 
   onDelete = () => {} 
 }) => {
   const { toast } = useToast();
   const [members, setMembers] = useState<Member[]>(data);
+  const [memberToDelete, setMemberToDelete] = useState<Member | null>(null);
 
-  const handleSubscriptionChange = (memberId: number, value: string) => {
+  // Update local state when props change
+  React.useEffect(() => {
+    setMembers(data);
+  }, [data]);
+
+  const handleSubscriptionChange = (memberId: number | string, value: string) => {
     const updatedMembers = members.map(member => {
       if (member.id === memberId) {
         const subscriptionType = value as 'monthly' | 'quarterly' | 'annual';
@@ -141,14 +160,43 @@ const MembersTable: FC<MembersTableProps> = ({
     }
   };
 
+  const handleDeleteClick = (member: Member) => {
+    setMemberToDelete(member);
+  };
+
+  const confirmDelete = () => {
+    if (memberToDelete) {
+      onDelete(memberToDelete.id);
+      setMemberToDelete(null);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
+        <div className="flex justify-center items-center h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-fitness-purple"></div>
+        </div>
+      </div>
+    );
+  }
+
+  if (members.length === 0) {
+    return (
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
+        <div className="text-center py-12">
+          <h3 className="text-lg font-medium text-gray-700 mb-2">No Members Found</h3>
+          <p className="text-gray-500">Start by adding your first gym member.</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200">
       <div className="p-4 border-b border-gray-200">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold">Member List</h2>
-          <Button className="bg-fitness-purple hover:bg-fitness-lightpurple">
-            Add New Member
-          </Button>
         </div>
       </div>
       
@@ -208,7 +256,7 @@ const MembersTable: FC<MembersTableProps> = ({
                         </DropdownMenuItem>
                         <DropdownMenuItem 
                           className="text-red-600" 
-                          onClick={() => onDelete(member.id)}
+                          onClick={() => handleDeleteClick(member)}
                         >
                           <Trash2 className="mr-2 h-4 w-4" />
                           Delete
@@ -222,6 +270,26 @@ const MembersTable: FC<MembersTableProps> = ({
           </TableBody>
         </Table>
       </div>
+
+      <AlertDialog open={!!memberToDelete} onOpenChange={(open) => !open && setMemberToDelete(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This will permanently delete {memberToDelete?.name}'s account and all associated data. This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction 
+              onClick={confirmDelete}
+              className="bg-red-600 hover:bg-red-700"
+            >
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };
