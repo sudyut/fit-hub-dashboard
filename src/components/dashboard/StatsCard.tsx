@@ -12,6 +12,7 @@ interface StatsCardProps {
     isPositive: boolean;
   };
   className?: string;
+  onClick?: () => void; // Add onClick prop
 }
 
 const StatsCard: FC<StatsCardProps> = ({
@@ -21,13 +22,16 @@ const StatsCard: FC<StatsCardProps> = ({
   description,
   trend,
   className,
+  onClick, // Include onClick in the destructured props
 }) => {
   return (
     <div
       className={cn(
         "bg-white p-6 rounded-lg border border-gray-200 shadow-sm flex flex-col",
+        onClick && "cursor-pointer hover:shadow-md transition-shadow",
         className
       )}
+      onClick={onClick} // Add onClick handler
     >
       <div className="flex justify-between items-start">
         <div>
