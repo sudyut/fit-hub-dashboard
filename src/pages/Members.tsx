@@ -1,3 +1,4 @@
+
 import { FC, useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -101,10 +102,13 @@ const Members: FC = () => {
 
   const handleDelete = async (id: number | string) => {
     try {
+      // Convert id to string if it's a number
+      const idString = typeof id === 'number' ? id.toString() : id;
+      
       const { error } = await supabase
         .from('members')
         .delete()
-        .eq('id', id);
+        .eq('id', idString);
       
       if (error) {
         throw error;
