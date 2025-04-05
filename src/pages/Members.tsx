@@ -1,4 +1,3 @@
-
 import { FC, useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -28,6 +27,11 @@ const Members: FC = () => {
       
       if (error) {
         throw error;
+      }
+      
+      if (!data) {
+        setMembers([]);
+        return;
       }
       
       // Transform Supabase data to match the Member interface
@@ -95,7 +99,7 @@ const Members: FC = () => {
     });
   };
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: number | string) => {
     try {
       const { error } = await supabase
         .from('members')

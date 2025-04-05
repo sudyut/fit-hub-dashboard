@@ -14,7 +14,7 @@ import {
 interface PendingPaymentsTableProps {
   data: Member[];
   onEdit: (member: Member) => void;
-  onDelete: (id: number) => void;
+  onDelete: (id: number | string) => void;
 }
 
 const PendingPaymentsTable: FC<PendingPaymentsTableProps> = ({ data, onEdit, onDelete }) => {

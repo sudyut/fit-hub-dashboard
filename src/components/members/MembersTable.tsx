@@ -1,5 +1,5 @@
 
-import { useState, FC } from "react";
+import { useState, FC, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { 
   Table, 
@@ -108,7 +108,7 @@ const MembersTable: FC<MembersTableProps> = ({
   const [memberToDelete, setMemberToDelete] = useState<Member | null>(null);
 
   // Update local state when props change
-  React.useEffect(() => {
+  useEffect(() => {
     setMembers(data);
   }, [data]);
 

@@ -1,5 +1,5 @@
 
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -16,7 +16,7 @@ interface AddMemberDialogProps {
 }
 
 const AddMemberDialog: FC<AddMemberDialogProps> = ({ onMemberAdded }) => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleSuccess = () => {
     setOpen(false);

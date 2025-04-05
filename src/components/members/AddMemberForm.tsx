@@ -1,4 +1,3 @@
-
 import { FC, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -6,6 +5,7 @@ import * as z from "zod";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { format } from "date-fns";
+import { Database } from "@/integrations/supabase/types";
 
 import {
   Form,
@@ -116,18 +116,20 @@ const AddMemberForm: FC<AddMemberFormProps> = ({ onSuccess, onCancel }) => {
   const onSubmit = async (data: MemberFormValues) => {
     setIsSubmitting(true);
     try {
-      // Format dates for PostgreSQL
       const formattedData = {
-        ...data,
+        name: data.name,
+        age: data.age,
         date_of_birth: data.dateOfBirth ? format(data.dateOfBirth, 'yyyy-MM-dd') : null,
+        phone: data.phone || null,
+        email: data.email || null,
+        address: data.address || null,
+        emergency_contact: data.emergencyContact || null,
+        height: data.height || null,
+        weight: data.weight || null,
+        body_fat: data.bodyFat || null,
+        subscription_type: data.subscriptionType,
         subscription_start: format(data.subscriptionStart, 'yyyy-MM-dd'),
         subscription_end: format(data.subscriptionEnd, 'yyyy-MM-dd'),
-        // Remove fields that don't match the database column names
-        dateOfBirth: undefined,
-        subscriptionStart: undefined,
-        subscriptionEnd: undefined,
-        bodyFat: data.bodyFat,
-        subscription_type: data.subscriptionType,
         payment_status: data.paymentStatus,
       };
 
