@@ -1,4 +1,3 @@
-
 import { FC, useState } from "react";
 import { Member } from "./MembersTable";
 import { Button } from "@/components/ui/button";
@@ -24,6 +23,7 @@ import {
 } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Badge } from "@/components/ui/badge";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
