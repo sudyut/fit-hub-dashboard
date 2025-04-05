@@ -88,10 +88,10 @@ const Dashboard: FC = () => {
     member.paymentStatus === 'pending' || member.paymentStatus === 'overdue'
   );
 
-  const handleEditMember = (member: Member) => {
+  const handleViewMember = (member: Member) => {
     toast({
-      title: "Edit Member",
-      description: `Editing ${member.name}'s information.`,
+      title: "View Member",
+      description: `Viewing ${member.name}'s information.`,
     });
   };
 
@@ -171,14 +171,15 @@ const Dashboard: FC = () => {
       {activeSection === 'pendingPayments' && (
         <div className="bg-white p-6 rounded-lg shadow-md mb-8">
           <h2 className="text-xl font-semibold mb-4">Pending Payments</h2>
-          <PendingPaymentsTable data={pendingMembers} onEdit={handleEditMember} onDelete={handleDeleteMember} />
+          <PendingPaymentsTable data={pendingMembers} onEdit={handleViewMember} onDelete={handleDeleteMember} />
         </div>
       )}
       
       {!activeSection && (
         <MembersTable 
-          data={members} 
-          onEdit={handleEditMember}
+          data={members.slice(0, 5)} 
+          onView={handleViewMember}
+          onEdit={handleViewMember}
           onDelete={handleDeleteMember}
         />
       )}
